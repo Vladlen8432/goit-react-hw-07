@@ -1,13 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
-import { deleteContact } from "../redux/contactsOps";
+import { deleteContact } from "../../redux/contactsOps";
 
 const ContactList = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector((state) => state.items);
-  const filter = useSelector((state) => state.filter);
+  const contacts = useSelector((state) => state.items || []);
+  const filter = useSelector((state) => state.filter || "");
 
   const filteredContacts = contacts.filter((contact) =>
-    contact.name.toLowerCase().includes(filter.toLowerCase())
+    (contact.name || "").toLowerCase().includes(filter.toLowerCase())
   );
 
   const handleDelete = (id) => {

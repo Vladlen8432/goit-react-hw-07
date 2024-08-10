@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { updateFilter } from "../redux/contactSlice";
-// import css from "./FilterByName.module.css";
+import { updateFilter } from "../../redux/contactSlice";
 
 const SearchInput = () => {
   const dispatch = useDispatch();
