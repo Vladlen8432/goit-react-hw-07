@@ -12,13 +12,27 @@ const ContactForm = () => {
     setFormData((prevState) => ({ ...prevState, [name]: value }));
   };
 
+  const resetForm = () => {
+    setFormData({ name: "", number: "" });
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const { name, number } = formData;
+
     if (name.trim() === "" || number.trim() === "") return;
 
+    const isDuplicate = contacts.some(
+      (contact) => contact.name.toLowerCase() === name.toLowerCase()
+    );
+
+    if (isDuplicate) {
+      alert(`${name} is already in contacts.`);
+      return;
+    }
+
     dispatch(addContact({ name, number }));
-    setFormData({ name: "", number: "" });
+    resetForm();
   };
 
   return (
@@ -30,28 +44,20 @@ const ContactForm = () => {
           required
           value={formData.name}
           onChange={handleChange}
+          placeholder="Enter name"
         />
         <br />
         <input
-          type="text"
+          type="tel"
           name="number"
           required
           value={formData.number}
           onChange={handleChange}
+          placeholder="Enter phone number"
         />
         <br />
         <button type="submit">Add contact</button>
       </form>
-
-      {contacts.length > 0 && (
-        <ul>
-          {contacts.map((contact) => (
-            <li key={contact.id}>
-              {contact.name}: {contact.number}
-            </li>
-          ))}
-        </ul>
-      )}
     </div>
   );
 };
